@@ -1,8 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const app = express();
+app.use(cors({ credentials: true, origin: ['http://localhost:3000']}));
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -110,7 +112,7 @@ app.post('/api/product/brand', auth, admin, (req, res) => {
     });
 });
 
-app.get('/api/product/brand', (req, res) => {
+app.get('/api/product/brands', (req, res) => {
     Brand.find({}, (err, brands) => {
         if(err) return res.status(400).send(err);
         res.status(200).send(brands);
