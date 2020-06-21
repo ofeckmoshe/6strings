@@ -45,7 +45,7 @@ const Footer = () => {
                                 />
                                 <div className="nfo">
                                     <div>working hours</div>
-                                    <div>every day/ pam-8pm</div>
+                                    <div>every day/ 9am-8pm</div>
                                 </div>
                             </div>
                             <div className="tag">

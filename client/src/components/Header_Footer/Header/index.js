@@ -107,7 +107,7 @@ class Header extends Component {
                 <div className="container">
                     <div className="left">
                         <div className="logo">
-                            6Strings
+                            <Link to="/">6Strings</Link>
                         </div>
                     </div>
 
