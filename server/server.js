@@ -65,7 +65,7 @@ app.get('/api/product/articles_by_id', (req, res) => {
     });
 });
 
-app.post('/api/product/article', auth, admin, (req, res) => {
+app.post('/api/product/articles', auth, admin, (req, res) => {
     const product = new Product(req.body);
 
     product.save((err, doc) => {
