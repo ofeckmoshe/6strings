@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { frets, price } from '../utils/Form/fixed_categories';
 
 import PageTop from '../utils/page_top';
-import { getBrands, getWoods } from '../../actions/products_actions';
+import { getProductsToShop, getBrands, getWoods } from '../../actions/products_actions';
 
 import CollapseCheckbox from '../utils/collaps_checkbox';
 import CollapseRadio from '../utils/collapse_radio';
@@ -26,6 +26,11 @@ class Shop extends Component {
     componentDidMount() {
         this.props.dispatch(getBrands());
         this.props.dispatch(getWoods());
+        this.props.dispatch(getProductsToShop(
+            this.state.skip,
+            this.state.limit,
+            this.state.filters
+        ));
     }
 
     handlePrice = (value) => {
@@ -49,9 +54,20 @@ class Shop extends Component {
             newFilters[category] = priceValues;
         }
 
+        this.showFilteredResults(newFilters);
         this.setState({ 
             filters: newFilters 
         });
+    };
+
+    showFilteredResults = (filters) => {
+        this.props.dispatch(getProductsToShop(
+            0,
+            this.state.limit,
+            filters
+        )).then(() => {
+            this.setState({ skip: 0 })
+        })
     };
     
 
@@ -71,14 +87,14 @@ class Shop extends Component {
                                 initStase={true}
                                 title="Brands"
                                 list={products.brands}
-                                handleFilters={(filters) => this.handleFilters(filters,'brands')}
+                                handleFilters={(filters) => this.handleFilters(filters,'brand')}
 
                             />
                             <CollapseCheckbox 
                                 initStase={false}
                                 title="Frets"
                                 list={frets}
-                                handleFilters={(filters) => this.handleFilters(filters,'brands')}
+                                handleFilters={(filters) => this.handleFilters(filters,'Frets')}
 
                             />
                             <CollapseCheckbox 
