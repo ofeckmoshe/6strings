@@ -22,29 +22,31 @@ export const validate = (element, formData= []) => {
     return errors
 };
 
-export const update = (element, formData, formName) => {
-    const newFormData = { ...formData };
+export const update = (element, formdata, formName ) => {
+    const newFormdata = {
+        ...formdata
+    }
     const newElement = {
-        ...newFormData[element.id]
+        ...newFormdata[element.id]
     }
 
     newElement.value = element.event.target.value;
 
     if(element.blur){
-        let validData = validate(newElement, formData);
+        let validData = validate(newElement,formdata);
         newElement.valid = validData[0];
         newElement.validationMessage = validData[1];
     }
 
     newElement.touched = element.blur;
-    newFormData[element.id] = newElement;
+    newFormdata[element.id] = newElement;
 
-    return newFormData;
-};
+    return newFormdata;
+}
 
 export const generateData = (formData, formName) => {
     let dataToSubmit = {};
-
+   
     for(let key in formData) {
         if(key !== 'confirmPassword'){
             dataToSubmit[key] = formData[key].value;
@@ -63,3 +65,45 @@ export const isFormValid = (formData, formName) => {
     }
     return formIsValid;
 };
+
+export const populateOptionFields= (formdata, arrayData = [], field) => {
+    const newArray = [];
+    const newFormdata = { ...formdata };
+
+    arrayData.forEach(item => {
+        newArray.push({key:item._id, value:item.name});
+    });
+
+    newFormdata[field].config.options = newArray;
+    return newFormdata;
+}
+
+export const resetFields = (formdata, formName) => {
+    const newFormdata = { ...formdata} ;
+
+    for(let key in newFormdata){
+        if(key === 'images'){
+            newFormdata[key].value = [];
+        }else{
+            newFormdata[key].value = '';
+        }
+
+        newFormdata[key].valid = false;
+        newFormdata[key].touched = false;
+        newFormdata[key].validationMessage = '';
+    }
+
+    return newFormdata
+}
+
+export const populateFields = (formData, fields) => {
+
+    for(let key in formData){
+        formData[key].value = fields[key];
+        formData[key].valid = true;
+        formData[key].touched = true;
+        formData[key].validationMessage = ''
+    }
+
+    return formData;
+}

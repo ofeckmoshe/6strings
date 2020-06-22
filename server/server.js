@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const formidable = require('express-formidable');
+const cloudinary = require('cloudinary');
 const cors = require('cors');
 
 const app = express();
@@ -14,6 +16,12 @@ mongoose.connect(process.env.DATABASE);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET
+});
 
 // models // 
 
@@ -50,6 +58,9 @@ app.post('/api/product/shop', (req, res) => {
             }
         }
     };
+
+    findArgs['publish'] = true;
+
     Product.find(findArgs)
         .populate('brand')
         .populate('wood')
@@ -212,6 +223,28 @@ app.get('/api/users/logout',auth, (req, res) => {
             return res.status(200).send({ success: true });
         }
     )
+});
+
+app.post('/api/users/uploadimage', auth, admin, formidable(), (req, res) => {
+    cloudinary.uploader.upload(req.files.file.path, (result) => {
+        console.log(result);
+        res.status(200).send({
+            public_id: result.public_id,
+            url: result.url
+        })
+    },{
+        public_id: `${Date.now()}G11x`,
+        resource_type: 'auto'
+    });
+});
+
+app.get('/api/users/removeimage', auth, admin, (req, res) => {
+    let image_id = req.body.Public_id;
+    
+    cloudinary.uploader.destroy(image_id, (error, result) => {
+        if(error) return res.json({ success: false, error });
+        res.status(200).send('ok');
+    });
 });
 
 const port = process.env.PORT || 3002;
