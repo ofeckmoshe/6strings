@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter} from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../actions/user_actions';
 
@@ -9,113 +10,120 @@ class Header extends Component {
         page:[
             {
                 name:'Home',
-                linkTo: '/',
+                linkTo:'/',
                 public: true
             },
             {
                 name:'Guitars',
-                linkTo: '/shop',
+                linkTo:'/shop',
                 public: true
             }
         ],
         user:[
             {
                 name:'My Cart',
-                linkTo: '/user/cart',
+                linkTo:'/user/cart',
                 public: false
             },
             {
                 name:'My Account',
-                linkTo: '/user/dasboard',
+                linkTo:'/user/dashboard',
                 public: false
             },
             {
-                name:'Login',
-                linkTo: '/register_login',
+                name:'Log in',
+                linkTo:'/register_login',
                 public: true
             },
             {
-                name:'Logout',
-                linkTo: '/logout',
+                name:'Log out',
+                linkTo:'/user/logout',
                 public: false
-            }
+            },
         ]
     }
 
+
     logoutHandler = () => {
-        this.props.dispatch(logoutUser()).then(response => {
+        this.props.dispatch(logoutUser()).then(response =>{
             if(response.payload.success){
-                this.props.history.push('/');
+                this.props.history.push('/')
             }
-        });
-    };
+        })
+    }
 
-    defaultLink = (item, index) => (
-        item.name === 'Logout' ? 
-            <div className="log_out_link" key={index} onClick={() => this.logoutHandler()}>
-                {item.name}
-            </div>
-        :
-            <Link to={item.linkTo} key={index}>
-                {item.name}
-            </Link>
-    );
 
-    cartLink = (item, index) => {
+    cartLink = (item,i) => {
         const user = this.props.user.userData;
-        
+
         return (
-            <div className="cart_link" key={index}>
-                <span>{user.cart ? user.cart.length : 0}</span>
-                <Link to={item.linkTo} key={index}>
+            <div className="cart_link" key={i}>
+                <span>{user.cart ? user.cart.length:0}</span>
+                <Link to={item.linkTo}>
                     {item.name}
                 </Link>
             </div>
-        );
-    };
+        )
+    }
 
-    showLinks = (type) => {
+
+    defaultLink = (item,i) => (
+        item.name === 'Log out' ?
+            <div className="log_out_link"
+                key={i}
+                onClick={()=> this.logoutHandler()}
+            >
+                {item.name}
+            </div>
+
+        :
+        <Link to={item.linkTo} key={i}>
+            {item.name}
+        </Link>
+    )
+
+
+    showLinks = (type) =>{
         let list = [];
 
         if(this.props.user.userData){
-            type.forEach(item => {
+            type.forEach((item)=>{
                 if(!this.props.user.userData.isAuth){
-                    if(item.public ===  true){
-                        list.push(item);
+                    if(item.public === true){
+                        list.push(item)
                     }
-                }else{
-                    if(item.name !== 'Login'){
-                        list.push(item);
+                } else{
+                    if(item.name !== 'Log in'){
+                        list.push(item)
                     }
                 }
             });
         }
-        return list.map((item, index) => {
+
+        return list.map((item,i)=>{
             if(item.name !== 'My Cart'){
-                return this.defaultLink(item, index);
-            }else{
-                return this.cartLink(item, index);
+                return this.defaultLink(item,i)
+            } else {
+                return this.cartLink(item,i)
             }
             
-        });
-    };
+        })
+    }
+
 
     render() {
-
         return (
             <header className="bck_b_light">
                 <div className="container">
                     <div className="left">
                         <div className="logo">
-                            <Link to="/">6Strings</Link>
+                            WAVES
                         </div>
                     </div>
-
                     <div className="right">
                         <div className="top">
-                        {this.showLinks(this.state.user)}
+                            {this.showLinks(this.state.user)}
                         </div>
-
                         <div className="bottom">
                             {this.showLinks(this.state.page)}
                         </div>
@@ -126,7 +134,7 @@ class Header extends Component {
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state){
     return {
         user: state.user
     }

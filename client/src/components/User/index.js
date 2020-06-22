@@ -1,10 +1,10 @@
 import React from 'react';
-import UserLayout from '../hoc/userLayout';
+import UserLayout from '../hoc/user';
 import MyButton from '../utils/button';
 
-const UserDasboard = ({ user }) => {
+const UserDashboard = ({ user }) => {
     return (
-        <UserLayout>
+        <UserLayout user={user}>
             <div>
                 <div className="user_nfo_panel">
                     <h1>User information</h1>
@@ -32,4 +32,4 @@ const UserDasboard = ({ user }) => {
     );
 };
 
-export default UserDasboard;
+export default UserDashboard;
