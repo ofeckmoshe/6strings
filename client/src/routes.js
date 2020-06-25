@@ -7,6 +7,7 @@ import AuthCheck from './components/hoc/auth';
 import RegisterLogin from './components/Register_login'
 import Register from './components/Register_login/register';
 import Shop from './components/Shop';
+import ProductPage from './components/Product'
 
 import UserDashboard from './components/User';
 import AddProduct from './components/User/Admin/add_product';
@@ -21,6 +22,7 @@ const Routes = () => {
             <Route path="/admin/add_product" exact component={AuthCheck(AddProduct,true)}/>
             <Route path="/admin/manage_categories" exact component={AuthCheck(ManageCategories,true)}/>
 
+            <Route path="/product_detail/:id" exact component={AuthCheck(ProductPage, null)} />
             <Route path="/register" exact component={AuthCheck(Register, false)} />
             <Route path="/register_login" exact component={AuthCheck(RegisterLogin, false)} />
             <Route path="/Shop" component={AuthCheck(Shop, null)} />

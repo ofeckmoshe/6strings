@@ -8,8 +8,31 @@ import { GET_PRODUCTS_BY_ARRIVAL,
          ADD_WOOD,
          GET_PRODUCTS_TO_SHOP, 
          ADD_PRODUCT,
-         CLEAR_PRODUCT } from './types';
+         CLEAR_PRODUCT,
+         GET_PRODUCTS_DETAILS,
+         CLEAR_PRODUCT_DETAILS
+        } from './types';
 import { PRODUCT_SERVER } from '../components/utils/misc';
+
+export function getProductDetails(id){
+    const request = fetcher.get(`${PRODUCT_SERVER}/articles_by_id?id=${id}&type=single`)
+        .then(response => {
+            return response.data[0];
+        });
+    
+    return {
+        type: GET_PRODUCTS_DETAILS,
+        payload: request
+    }
+};
+
+export function clearProductDetails(id){
+    
+    return {
+        type: CLEAR_PRODUCT_DETAILS,
+        payload: ''
+    }
+};
 
 export function getProductsByArrival(){
     const request = fetcher.get(`${PRODUCT_SERVER}/articles?sortBy=createdAt&order=desc&limit=4`)
