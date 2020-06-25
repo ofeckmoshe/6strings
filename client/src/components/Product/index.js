@@ -8,7 +8,6 @@ import ProductInfo from './product_info';
 import ProductImage from './productImage';
 
 
-
 class ProductPage extends Component {
 
     componentDidMount() {
@@ -37,7 +36,7 @@ class ProductPage extends Component {
                                     <div style={{width:'32em'}}>
                                         <ProductImage 
                                             details={this.props.products.productDetails}
-                                        />
+                                        /> 
                                     </div>
                                 </div>
                                 <div className="right">
