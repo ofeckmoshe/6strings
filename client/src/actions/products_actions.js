@@ -2,7 +2,10 @@ import fetcher from '../server-api/fetcher';
 
 import { GET_PRODUCTS_BY_ARRIVAL,
          GET_PRODUCTS_BY_SALES, 
-         GET_BRANDS, GET_WOODS, 
+         GET_BRANDS,
+         ADD_BRAND,
+         GET_WOODS, 
+         ADD_WOOD,
          GET_PRODUCTS_TO_SHOP, 
          ADD_PRODUCT,
          CLEAR_PRODUCT } from './types';
@@ -65,6 +68,26 @@ export function getBrands(){
     }
 };
 
+export function addBrand(dataToSubmit, existingBrands){
+    const request = fetcher.post(`${PRODUCT_SERVER}/brand`, dataToSubmit)
+        .then(response => {
+            let brands = [
+                ...existingBrands,
+                response.data.brand
+            ];
+
+            return {
+                success: response.data.success,
+                brands
+            };
+        });
+
+        return {
+            type: ADD_BRAND,
+            payload: request
+        }
+}
+
 export function getWoods(){
     const request = fetcher.get(`${PRODUCT_SERVER}/woods`)
         .then(response => response.data);
@@ -74,6 +97,26 @@ export function getWoods(){
         payload: request
     }
 };
+
+export function addWood(dataToSubmit, existingWoods){
+    const request = fetcher.post(`${PRODUCT_SERVER}/wood`, dataToSubmit)
+        .then(response => {
+            let woods = [
+                ...existingWoods,
+                response.data.wood
+            ];
+
+            return {
+                success: response.data.success,
+                woods
+            };
+        });
+
+        return {
+            type: ADD_WOOD,
+            payload: request
+        }
+}
 
 export function addProduct(datatoSubmit){
 
