@@ -6,7 +6,10 @@ import { GET_PRODUCTS_BY_ARRIVAL,
          ADD_WOOD,
          GET_PRODUCTS_TO_SHOP,
          ADD_PRODUCT,
-         CLEAR_PRODUCT } from '../actions/types';
+         CLEAR_PRODUCT,
+         GET_PRODUCTS_DETAILS,
+         CLEAR_PRODUCT_DETAILS
+         } from '../actions/types';
 
 export default (state={}, action) => {
     switch(action.type) {
@@ -38,6 +41,10 @@ export default (state={}, action) => {
                 ...state,
                 addProduct: action.payload
             }
+        case GET_PRODUCTS_DETAILS:
+            return { ...state, productDetails: action.payload }
+        case CLEAR_PRODUCT_DETAILS:
+            return { ...state, productDetails: action.payload }
         default:
             return state;
     } 
