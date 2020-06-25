@@ -86,23 +86,6 @@ class Fileupload extends Component {
             <div>
                 <section>
                     <div className="dropzone clear">
-                        {/* <Dropzone
-                            onDrop={(e)=>this.onDrop(e)}
-                            multiple={false}
-                        >   
-                              {getInputProps => {
-                                return (
-                                    <div className="dropzone_box">
-                                        <input {...getInputProps()} />
-                                        <div className="wrap">
-                                            <FontAwesomeIcon
-                                                icon={faPlusCircle}
-                                            />
-                                        </div>
-                                    </div>
-                                    );
-                                }}
-                        </Dropzone> */}
                         <Dropzone
                             onDrop={(e)=>this.onDrop(e)}
                             multiple={false}

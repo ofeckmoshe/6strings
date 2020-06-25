@@ -10,6 +10,7 @@ import Shop from './components/Shop';
 
 import UserDashboard from './components/User';
 import AddProduct from './components/User/Admin/add_product';
+import ManageCategories from './components/User/Admin/manage_categories';
 
 
 const Routes = () => {
@@ -18,6 +19,7 @@ const Routes = () => {
           <Switch>
             <Route path="/user/dashboard" exact component={AuthCheck(UserDashboard, true)} />
             <Route path="/admin/add_product" exact component={AuthCheck(AddProduct,true)}/>
+            <Route path="/admin/manage_categories" exact component={AuthCheck(ManageCategories,true)}/>
 
             <Route path="/register" exact component={AuthCheck(Register, false)} />
             <Route path="/register_login" exact component={AuthCheck(RegisterLogin, false)} />
